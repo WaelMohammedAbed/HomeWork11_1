@@ -1,0 +1,112 @@
+def mypostfix(expression)
+
+  precedence = {nil=>0,"("=>0,"*" =>2, "+"=>1, "-"=>1,"/"=>2,"^"=>2}
+    expression=expression.gsub(/\s+/, "").split("")
+    
+    expression.unshift("(")
+    expression.push(")")
+    
+  output = Array.new
+  stack = Array.new
+  temp = ''
+
+
+  expression.each_with_index do |asc,i|
+#uts "char #{asc}"
+    case asc
+      when ")"
+        output.push(temp)
+        temp = ''
+        loop{
+          if stack.empty? == false
+            popped = stack.pop
+            if popped == "("
+                #puts i
+              break
+            else
+              gettemp=popped
+              #puts gettemp
+              #puts i
+              output.push(popped)
+            end
+          else
+            raise 'Missing "("!'
+          end
+        }
+      when "(","+", "*", "-", "/","^" #*+-/
+        output.push(temp)
+        temp = ''
+        unless asc == "("
+          p_asc = precedence[asc]
+          loop{
+            if  (p_asc > precedence[stack.last])
+                #puts i
+              break
+            else
+                gettemp=stack.pop
+                #puts gettemp
+                #puts i
+              output.push(gettemp)
+            end
+          }
+        end
+        #puts asc
+        #puts i
+        stack.push(asc)
+      else
+        temp += asc
+        #puts i
+    end
+  end
+  
+  stack.each do |asc|
+      #print asc 
+      output.push(asc)
+  end
+  
+  !output.include?('(') or raise 'Missing ")"!'
+  output.delete('')
+ 
+  output
+end
+
+def calPostfix(input)
+    while input.size >1 do
+        i=0
+        b=Array.new
+        while input[i].numeric? do
+            b << input[i]
+            i=i+1
+        end
+        
+        case input[i]
+          when /\A\+/
+            b[-2]=(b[-2].to_i+b[-1].to_i).to_s
+          when /\A\-/
+            b[-2]=(b[-2].to_i-b[-1].to_i).to_s
+          when /\A\*/
+            b[-2]=(b[-2].to_i*b[-1].to_i).to_s
+          when /\A\//
+            b[-2]=(b[-2].to_f/b[-1].to_f).to_s
+          when /\A\^/
+            b[-2]=(b[-2].to_i**b[-1].to_i).to_s
+        else
+          raise 'Token unknown'
+        end
+        
+       
+        input=b[0..-2]+input[(i+1)..-1]
+        
+        
+    end
+    input[0]
+end
+class String
+  def numeric?
+    Float(self) != nil rescue false
+  end
+end
+
+
+
+puts calPostfix(mypostfix("5 * (2 ^ 5) / (750/(2+1))"))
