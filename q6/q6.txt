@@ -1,0 +1,13 @@
+6- What is the purpose of application* files? * here refers to anything else that comes after the
+word "application".
+
+answer:
+
+in ruby application files classified into the following:
+
+assets: which contain all js, css and image files
+controllers: contain all classes that connect to the models to take data from it and give it to view, so it is the first thing the user hit when write url
+helpers: classes and methods used to help the developer to avoid duplication in code and for simplisity
+mailers: for anything related with emails
+models: resposible of working with data base retrieve, alter and insert data
+views: show all the final work to the user so it's like user interface to the site
