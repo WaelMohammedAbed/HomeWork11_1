@@ -1,0 +1,37 @@
+array1=[1,2,3,4,5,6,7,8,9,10];
+array2=[1,2,3,4,5,6,7,8,9,10];
+array3=[1,2,3,4,5,6,7,8,9,10];
+
+two=Array();
+three=Array();
+five=Array();
+
+array1.forEach(function(item, index, array) {
+  if(item%2===0)
+  two.push(item)
+  if (item%3===0)
+  three.push(item)
+  if (item%5===0)
+  five.push(item)
+  
+});
+array2.forEach(function(item, index, array) {
+  if(item%2===0)
+  two.push(item)
+  if (item%3===0)
+  three.push(item)
+  if (item%5===0)
+  five.push(item)
+});
+array3.forEach(function(item, index, array) {
+  if(item%2===0)
+  two.push(item)
+  if (item%3===0)
+  three.push(item)
+  if (item%5===0)
+  five.push(item)
+});
+
+console.log(two);
+console.log(three);
+console.log(five);
